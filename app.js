@@ -2,11 +2,18 @@ const mongoose = require('mongoose');
 
 mongoose.connect("mongodb://localhost:27017/fruitsDB", {
   useNewUrlParser: true
-});
+} );
 
 const fruitSchema = new mongoose.Schema({
-  name: String,
-  rating: Number,
+  name: {
+    type: String,
+    required: [true, "Please check your data entry no name specified!"]
+  },
+  rating: {
+    type: Number,
+    min: 1,
+    max: 10
+  },
   review: String
 });
 
@@ -14,38 +21,44 @@ const fruitSchema = new mongoose.Schema({
 const Fruit = mongoose.model("Fruit", fruitSchema);
 
 const fruit = new Fruit({
-  name: "Apple",
-  rating: 7,
-  review: "Pretty Solid as a Fruit."
+  rating: 10,
+  review: "Beautiful!"
 });
-
-const Kiwi = new Fruit({
-  name: "Kiwi",
-  score: 10,
-  review: "The Best Fruit"
-});
-
-const orange = new Fruit({
-  name: "Orange",
-  score: 4,
-  review: "Too Sour For me"
-})
-
-const banana = new Fruit({
-  name: "Banna",
-  score: 3,
-  review: "Wierd Texture"
-})
 
 //fruit.save();
 
-Fruit.insertMany([Kiwi, orange, banana], function (err) {
+Fruit.find(function (err, fruits) {
   if (err) {
     console.log(err);
   } else {
-    console.log("Successfully saved all the fruits to fruitsDB");
+
+    mongoose.connection.close();
+
+    fruits.forEach(function (fruit) {
+      console.log(fruit.name);
+    });
   }
-})
+});
+
+
+//Fruit.updateOne({_id: "6102a1d6f95f561404758055"}, {name: "Peach"}, function(err){
+// if(err){
+//   console.log(err);
+// } else{
+//   console.log("Successfully Updated document")
+//  }
+//});
+
+//Fruit.deleteOne({
+  //name: "Peach",
+  //function (err) {
+  //  if (err) {
+  //    console.log(err);
+  //  } else {
+   //   console.log("👍 Everythong going cool!");
+   // }
+ // }
+//})
 
 const peopleSchema = new mongoose.Schema({
   name: String,
@@ -59,4 +72,12 @@ const people = new People({
   age: 37
 })
 
-people.save();
+//people.save();
+
+People.deleteMany({name: "John"}, function(err){
+  if (err) {
+    console.log(err);
+  } else{
+    console.log("Success!")
+  }
+})
