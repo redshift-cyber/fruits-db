@@ -1,2 +1,2 @@
 # fruits-db
-A databse of fruits made using mongo db
+A databse of fruits made using mongo db and mongoose
