@@ -25,6 +25,14 @@ const fruit = new Fruit({
   review: "Beautiful!"
 });
 
+const mango = new Fruit({
+  name: "Mango",
+  score: 10,
+  review: "Sweet Like you!!"
+});
+
+mango.save();
+
 //fruit.save();
 
 Fruit.find(function (err, fruits) {
@@ -62,18 +70,31 @@ Fruit.find(function (err, fruits) {
 
 const peopleSchema = new mongoose.Schema({
   name: String,
-  age: Number
+  age: Number,
+  favouriteFruit: fruitSchema
 });
 
 const People = mongoose.model("People", peopleSchema);
 
-const people = new People({
-  name: "John",
-  age: 37
-})
+//const people = new People({
+// name: "Amy",
+//  age: 12,
+//  favouriteFruit: Lemon
+//})
 
 //people.save();
 
+People.updateOne({
+  name: "Amy"
+}, {
+  favouriteFruit: mango
+}, function (err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("Successfully Updated Document")
+  }
+});
 
 People.deleteMany({
   name: "John"
