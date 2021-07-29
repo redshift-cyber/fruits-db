@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.connect("mongodb://localhost:27017/fruitsDB", {
   useNewUrlParser: true
-} );
+});
 
 const fruitSchema = new mongoose.Schema({
   name: {
@@ -50,14 +50,14 @@ Fruit.find(function (err, fruits) {
 //});
 
 //Fruit.deleteOne({
-  //name: "Peach",
-  //function (err) {
-  //  if (err) {
-  //    console.log(err);
-  //  } else {
-   //   console.log("👍 Everythong going cool!");
-   // }
- // }
+//name: "Peach",
+//function (err) {
+//  if (err) {
+//    console.log(err);
+//  } else {
+//   console.log("👍 Everythong going cool!");
+// }
+// }
 //})
 
 const peopleSchema = new mongoose.Schema({
@@ -74,10 +74,13 @@ const people = new People({
 
 //people.save();
 
-People.deleteMany({name: "John"}, function(err){
+
+People.deleteMany({
+  name: "John"
+}, function (err) {
   if (err) {
     console.log(err);
-  } else{
+  } else {
     console.log("Success!")
   }
 })
